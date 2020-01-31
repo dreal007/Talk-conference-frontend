@@ -55,7 +55,8 @@
           <div class="card-body fixedText">
             <h5 class="card-title">{{talkItem.name}}</h5>
             <p class="card-text">{{talkItem.description}}</p>
-            <a href="#" class="btn btn-primary">View Attendees</a>
+            <a v-on:click="remove_talk(talkItem._id)" class="btn btn-danger text-white mr-3">Remove Talk</a>
+            <a href="#" class="btn btn-info">View Attendees</a>
           </div>
         </div>
       </div>
@@ -71,12 +72,28 @@ export default {
   props: {
     msg: String
   },
+
+  methods: {
+    getTalks(){
+          this.$store.dispatch('get_talks')
+      },
+
+    remove_talk(id){
+        this.$http.delete('talks/'+ id).then((resp)=>{
+             this.$store.dispatch('get_talks')
+             this.$toast.success('Removed talk successfully')
+        }).catch((err)=>{
+          console.log(err)
+          this.$toast.info('Could not remove talk');
+        })
+    }  
+  },
   computed: {
       ...mapState(['talks', 'talk_events']),
+  },
 
-      getTalks(){
-          this.$store.dispatch('get_talks')
-      }
+  beforeMount() {
+    this.getTalks();
   },
 }
 </script>
