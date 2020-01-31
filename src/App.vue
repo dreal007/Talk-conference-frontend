@@ -24,6 +24,7 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" data-toggle="modal" data-target="#createTalk">Create A Talk</a>
                   <a class="dropdown-item" data-toggle="modal" data-target="#createAttendee">Create An Attendee</a>
+                  <a class="dropdown-item" data-toggle="modal" data-target="#addAttendee">Add Attendee To Talk</a>
                    <!--<a class="dropdown-item" href="#">Another action</a>
                    <div class="dropdown-divider"></div>
                    <a class="dropdown-item" href="#">Something else here</a>-->
@@ -139,18 +140,53 @@
             </div>
           </div>
         </div>
+
+        <div class="modal fade" id="addAttendee" tabindex="-1" role="dialog" aria-labelledby="createAttendeeLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add an Attendee to Talk</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form>
+                    <div class="form-group align-content-center">
+                        <label>Select Talk</label>
+                        <select type="text" id="talk_id" v-model="add_attendee.talk_id" class="form-control" required>
+                            <option v-for="talk in talks" v-bind:value="talk._id">{{talk.name}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group align-content-center">
+                        <label>Select Attendee</label>
+                        <select type="text" id="attendee" v-model="add_attendee.attendees" class="form-control" placeholder="Enter last name" required>
+                            <option v-for="attendee in attendees" v-bind:value="attendee._id">{{attendee.first_name}} {{attendee.last_name}}</option>
+                        </select>
+                    </div>  
+                  </form>  
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" v-on:click="add_attendee_to_talk(add_attendee)" data-dismiss="modal">Add Attendee</button>
+              </div>
+            </div>
+          </div>
+        </div>
       <router-view/>
     </div>
   </div>
 </template>
 
 <script>
+import {mapState, mapGetter, mapAction } from 'vuex';
 export default {
   name : 'App',
   data : () => {
     return {
       new_talk : {},
       new_attendee : {},
+      add_attendee : {}
     } 
   },
 
@@ -177,6 +213,20 @@ export default {
         })
      },
 
+     add_attendee_to_talk(attendees){
+        this.$http.post('talk-events', attendees).then((resp)=>{
+            this.$store.dispatch('get_talk_events', attendees.talk_id)
+            this.$toast.success('Added attendee to talk successfully')
+        }).catch((err)=>{
+          console.log(err)
+          this.$toast.info('Could not add attendee to talk');
+        })
+     }
+
+  },
+
+  computed: {
+      ...mapState(['talks', 'talk_events', 'attendees']),
   },
 
 }

@@ -78,6 +78,10 @@ export default {
           this.$store.dispatch('get_talks')
       },
 
+    getAttendees(){
+          this.$store.dispatch('get_attendees')
+      },  
+
     remove_talk(id){
         this.$http.delete('talks/'+ id).then((resp)=>{
              this.$store.dispatch('get_talks')
@@ -89,11 +93,12 @@ export default {
     }  
   },
   computed: {
-      ...mapState(['talks', 'talk_events']),
+      ...mapState(['talks', 'talk_events', 'attendees']),
   },
 
   beforeMount() {
     this.getTalks();
+    this.getAttendees();
   },
 }
 </script>
