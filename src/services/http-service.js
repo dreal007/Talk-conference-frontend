@@ -4,7 +4,7 @@ import Vue from 'vue'
 import store from '../store'
 
 const options = {
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: 'https://talk-conference-2020.herokuapp.com/api/',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
