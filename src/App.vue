@@ -80,7 +80,7 @@
                         <div class="col-md-6">
                             <label>Caption Image URL :</label>
                             <input type="url"
-                            id="image_url" class="form-control" placeholder="Enter caption image url" v-model="new_talk.image_url" required>
+                            id="image_url" class="form-control" placeholder="Enter caption image url" v-model="new_talk.image_url">
                         </div>
                     </div>
                       <div class="form-group align-content-center">
