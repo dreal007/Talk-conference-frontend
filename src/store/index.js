@@ -16,7 +16,8 @@ export default new Vuex.Store({
   
   state: {
     talks : [],
-    talk_events : [],
+    talk : {},
+    talk_events : {},
     attendees : []
   },
 
@@ -25,12 +26,16 @@ export default new Vuex.Store({
         state.talks = payload;
     },
 
+    store_talk: (state, payload) => {
+      state.talk = payload;
+    },
+
     store_attendees: (state, payload) => {
       state.attendees = payload;
     },
 
     store_talk_events: (state, payload) => {
-      state.talk_events = payload;
+      state.talk_events = payload[0];
     }
   },
 
@@ -40,6 +45,14 @@ export default new Vuex.Store({
       console.log (talks)
       if(talks && !err){
           commit('store_talks', talks.data.payload);
+      }
+    },
+
+     async get_talk_by_id({ commit }, id){
+      const [talk, err] =  await $http.get('talks/'+id);
+      console.log (talk)
+      if(talk && !err){
+          commit('store_talk', talk.data.payload);
       }
     },
 

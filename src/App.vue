@@ -14,9 +14,6 @@
               <li class="nav-item active">
                 <router-link to="/"><a class="nav-link">Home <span class="sr-only">(current)</span></a></router-link>
               </li>
-              <li class="nav-item">
-                <router-link to="/about"><a class="nav-link">About</a></router-link>
-              </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Actions
@@ -221,7 +218,7 @@ export default {
           console.log(err)
           this.$toast.info('Could not add attendee to talk');
         })
-     }
+     },
 
   },
 

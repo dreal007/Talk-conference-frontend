@@ -14,6 +14,9 @@ import 'vue-toast-notification/dist/index.css'
 import LoadScript from 'vue-plugin-load-script'
 Vue.use(LoadScript);
 
+import VueMoment from 'vue-moment'
+import moment from 'moment-timezone'
+
 
 Vue.use(VueToast, {
   position: 'top',
@@ -24,6 +27,10 @@ Vue.use(VueToast, {
 Vue.use($http)
 Vue.use($axios)
 Vue.use(storage)
+Vue.use(VueMoment, {
+  moment,
+})
+// Vue.use(require('vue-moment'));
 
 Vue.config.productionTip = false
 
